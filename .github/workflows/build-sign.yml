@@ -15,7 +15,7 @@ env:
 
 jobs:
   build-scan:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
 
@@ -27,7 +27,7 @@ jobs:
         with:
           image-ref: ${{ env.IMAGE }}:ci
           severity: HIGH,CRITICAL
-          exit-code: "???"
+          exit-code: "1"
 
       - name: Generate SBOM
         uses: anchore/sbom-action@v0
@@ -39,7 +39,7 @@ jobs:
   publish-sign:
     needs: build-scan
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       packages: write
