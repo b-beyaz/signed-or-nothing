@@ -15,17 +15,21 @@ env:
 
 jobs:
   build-scan:
+    name: Build and Scan
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout 
+        uses: actions/checkout@v7
 
       - name: Build image
-        run: docker build -t $IMAGE:ci .
+        run: docker build -t signedornothing:scan  .
 
       - name: Trivy scan
-        uses: aquasecurity/trivy-action@0.36.0
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25
         with:
-          image-ref: ${{ env.IMAGE }}:ci
+          image-ref: signedornothing:scan
           severity: HIGH,CRITICAL
           exit-code: "1"
 
