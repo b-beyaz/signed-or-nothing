@@ -27,7 +27,7 @@ jobs:
         run: docker build -t signedornothing:scan  .
 
       - name: Trivy scan
-        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25
+        uses: aquasecurity/trivy-action@6abccf398f78b4c337599c0656f933d91efb91a0
         with:
           image-ref: signedornothing:scan
           severity: HIGH,CRITICAL
